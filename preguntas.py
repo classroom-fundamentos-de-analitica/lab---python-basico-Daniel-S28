@@ -30,6 +30,10 @@ def pregunta_01():
 
 
 def pregunta_02():
+
+    letrastotal = [row[0] for row in datos]
+    letras = set(row[0] for row in datos)
+    repeticiones = sorted([(letra,letrastotal.count(letra)) for letra in letras], key = lambda x:x[0])
     """
     Retorne la cantidad de registros por cada letra de la primera columna como la lista
     de tuplas (letra, cantidad), ordendas alfabéticamente.
@@ -44,7 +48,7 @@ def pregunta_02():
     ]
 
     """
-    return
+    return repeticiones
 
 
 def pregunta_03():
