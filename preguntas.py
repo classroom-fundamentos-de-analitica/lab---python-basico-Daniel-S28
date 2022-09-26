@@ -111,6 +111,21 @@ def pregunta_04():
 
 
 def pregunta_05():
+
+    letras = set(row[0] for row in datos)
+    respuesta=[]
+
+    for i in letras:
+        minimo=10000
+        maximo=0
+        for row in datos:
+            if row[0]==i:
+                if int(row[1])>maximo:
+                    maximo=int(row[1])
+                if int(row[1])<minimo:
+                    minimo=int(row[1])
+        respuesta.append((i,maximo,minimo))
+
     """
     Retorne una lista de tuplas con el valor maximo y minimo de la columna 2 por cada
     letra de la columa 1.
@@ -125,7 +140,7 @@ def pregunta_05():
     ]
 
     """
-    return
+    return sorted(respuesta, key=lambda x:x[0])
 
 
 def pregunta_06():
