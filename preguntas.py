@@ -82,6 +82,10 @@ def pregunta_03():
 
 
 def pregunta_04():
+
+    meses=[row[2].split("-")[1] for row in datos]
+    reps={mes:meses.count(mes) for mes in meses}
+    respuesta=sorted([(key,value) for key,value in reps.items()], key = lambda x:x[0])
     """
     La columna 3 contiene una fecha en formato `YYYY-MM-DD`. Retorne la cantidad de
     registros por cada mes, tal como se muestra a continuación.
@@ -103,7 +107,7 @@ def pregunta_04():
     ]
 
     """
-    return
+    return respuesta
 
 
 def pregunta_05():
