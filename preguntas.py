@@ -52,6 +52,18 @@ def pregunta_02():
 
 
 def pregunta_03():
+
+    suma=dict()
+
+    for row in datos:
+        try:
+            suma[row[0]]+=int(row[1])
+        except KeyError:
+            suma[row[0]]=int(row[1])
+
+    respuesta=sorted([(key,value) for key,value in suma.items()], key = lambda x:x[0])
+
+
     """
     Retorne la suma de la columna 2 por cada letra de la primera columna como una lista
     de tuplas (letra, suma) ordendas alfabeticamente.
@@ -66,7 +78,7 @@ def pregunta_03():
     ]
 
     """
-    return
+    return respuesta
 
 
 def pregunta_04():
