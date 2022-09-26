@@ -144,6 +144,21 @@ def pregunta_05():
 
 
 def pregunta_06():
+
+    info = [elemento.split(":") for row in datos for elemento in row[4].split(",")]
+    unicos = {i[0] for i in info}
+    respuesta = []
+    for i in unicos:
+            minimo=10000
+            maximo=0
+            for par in info:
+                if par[0] == i:
+                    if int(par[1]) > maximo:
+                        maximo = int(par[1])
+                    if int(par[1]) < minimo:
+                        minimo = int(par[1])
+            respuesta.append((i,minimo,maximo))
+
     """
     La columna 5 codifica un diccionario donde cada cadena de tres letras corresponde a
     una clave y el valor despues del caracter `:` corresponde al valor asociado a la
@@ -165,7 +180,7 @@ def pregunta_06():
     ]
 
     """
-    return
+    return sorted(respuesta, key=lambda x:x[0])
 
 
 def pregunta_07():
