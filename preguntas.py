@@ -184,6 +184,15 @@ def pregunta_06():
 
 
 def pregunta_07():
+
+    dicc={}
+    for row in datos:
+        if int(row[1]) not in dicc.keys():
+            dicc[int(row[1])] = [row[0]]
+        else:
+            dicc[int(row[1])].append(row[0])
+    respuesta = sorted([(key,value) for key,value in dicc.items()], key = lambda x:x[0])
+
     """
     Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla contiene un
     valor posible de la columna 2 y una lista con todas las letras asociadas (columna 1)
@@ -204,7 +213,7 @@ def pregunta_07():
     ]
 
     """
-    return
+    return respuesta
 
 
 def pregunta_08():
