@@ -260,6 +260,10 @@ def pregunta_08():
 
 
 def pregunta_09():
+
+    info = [elemento.split(":")[0] for row in datos for elemento in row[4].split(",")]
+    repeticiones = {i:info.count(i) for i in sorted(set(info))}
+
     """
     Retorne un diccionario que contenga la cantidad de registros en que aparece cada
     clave de la columna 5.
@@ -279,7 +283,7 @@ def pregunta_09():
     }
 
     """
-    return
+    return repeticiones
 
 
 def pregunta_10():
