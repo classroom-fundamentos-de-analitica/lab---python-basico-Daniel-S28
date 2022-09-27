@@ -217,6 +217,24 @@ def pregunta_07():
 
 
 def pregunta_08():
+
+    dicc={}
+    for row in datos:
+        if int(row[1]) not in dicc.keys():
+            dicc[int(row[1])] = [row[0]]
+        else:
+            dicc[int(row[1])].append(row[0])
+    respuesta = sorted([(key,sorted(list(set(value)))) for key,value in dicc.items()], key = lambda x:x[0])
+
+    """ OTRA FORMA DE HACERLO
+    for row in datos:
+        if int(row[1]) not in dicc.keys():
+            dicc[int(row[1])] = [row[0]]
+        elif row[0] not in dicc[int(row[1])]:
+            dicc[int(row[1])].append(row[0])
+
+    respuesta = sorted([(key,sorted(value)) for key,value in dicc.items()], key = lambda x:x[0]) """
+
     """
     Genere una lista de tuplas, donde el primer elemento de cada tupla contiene  el valor
     de la segunda columna; la segunda parte de la tupla es una lista con las letras
@@ -238,7 +256,7 @@ def pregunta_08():
     ]
 
     """
-    return
+    return respuesta
 
 
 def pregunta_09():
