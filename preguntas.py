@@ -342,6 +342,20 @@ def pregunta_11():
 
 
 def pregunta_12():
+
+    info = []
+    for row in datos:
+        numeros=[]
+        for elm in row[4].split(","):
+            numeros.append(int(elm.split(":")[1]))
+        info.append((row[0],numeros))
+
+    dicc={}
+    for row in info:
+        if row[0] not in dicc.keys():
+            dicc[row[0]] = sum(row[1])
+        else:
+            dicc[row[0]] += sum(row[1])
     """
     Genere un diccionario que contengan como clave la columna 1 y como valor la suma de
     los valores de la columna 5 sobre todo el archivo.
@@ -356,4 +370,4 @@ def pregunta_12():
     }
 
     """
-    return
+    return dict(sorted(dicc.items(), key=lambda x:x[0]))
