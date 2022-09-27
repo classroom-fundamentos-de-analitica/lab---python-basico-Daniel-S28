@@ -224,6 +224,7 @@ def pregunta_08():
             dicc[int(row[1])] = [row[0]]
         else:
             dicc[int(row[1])].append(row[0])
+
     respuesta = sorted([(key,sorted(list(set(value)))) for key,value in dicc.items()], key = lambda x:x[0])
 
     """ OTRA FORMA DE HACERLO
@@ -311,6 +312,15 @@ def pregunta_10():
 
 
 def pregunta_11():
+
+    dicc={}
+    for row in datos:
+        for letra in row[3].split(","):
+            if letra not in dicc.keys():
+                dicc[letra] = int(row[1])
+            else:
+                dicc[letra] += int(row[1])
+
     """
     Retorne un diccionario que contengan la suma de la columna 2 para cada letra de la
     columna 4, ordenadas alfabeticamente.
@@ -328,7 +338,7 @@ def pregunta_11():
 
 
     """
-    return
+    return  dict(sorted(dicc.items(), key=lambda x:x[0]))
 
 
 def pregunta_12():
