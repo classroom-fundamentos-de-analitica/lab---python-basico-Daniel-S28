@@ -287,6 +287,9 @@ def pregunta_09():
 
 
 def pregunta_10():
+
+    respuesta = [(row[0],len(row[3].split(",")),len(row[4].split(","))) for row in datos]
+
     """
     Retorne una lista de tuplas contengan por cada tupla, la letra de la columna 1 y la
     cantidad de elementos de las columnas 4 y 5.
@@ -304,7 +307,7 @@ def pregunta_10():
 
 
     """
-    return
+    return respuesta
 
 
 def pregunta_11():
