@@ -11,9 +11,14 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
+with open("data.csv", "r") as file:
+        datos = file.readlines()
 
+datos = [row.rstrip("\n").split() for row in datos]
 
 def pregunta_01():
+    
+    suma = sum([int(datos[i][1]) for i in range(len(datos))])
     """
     Retorne la suma de la segunda columna.
 
@@ -21,10 +26,14 @@ def pregunta_01():
     214
 
     """
-    return
+    return suma
 
 
 def pregunta_02():
+
+    letrastotal = [row[0] for row in datos]
+    letras = set(row[0] for row in datos)
+    repeticiones = sorted([(letra,letrastotal.count(letra)) for letra in letras], key = lambda x:x[0])
     """
     Retorne la cantidad de registros por cada letra de la primera columna como la lista
     de tuplas (letra, cantidad), ordendas alfabéticamente.
@@ -39,10 +48,22 @@ def pregunta_02():
     ]
 
     """
-    return
+    return repeticiones
 
 
 def pregunta_03():
+
+    suma=dict()
+
+    for row in datos:
+        try:
+            suma[row[0]]+=int(row[1])
+        except KeyError:
+            suma[row[0]]=int(row[1])
+
+    respuesta=sorted([(key,value) for key,value in suma.items()], key = lambda x:x[0])
+
+
     """
     Retorne la suma de la columna 2 por cada letra de la primera columna como una lista
     de tuplas (letra, suma) ordendas alfabeticamente.
@@ -57,10 +78,14 @@ def pregunta_03():
     ]
 
     """
-    return
+    return respuesta
 
 
 def pregunta_04():
+
+    meses=[row[2].split("-")[1] for row in datos]
+    reps={mes:meses.count(mes) for mes in meses}
+    respuesta=sorted([(key,value) for key,value in reps.items()], key = lambda x:x[0])
     """
     La columna 3 contiene una fecha en formato `YYYY-MM-DD`. Retorne la cantidad de
     registros por cada mes, tal como se muestra a continuación.
@@ -82,10 +107,25 @@ def pregunta_04():
     ]
 
     """
-    return
+    return respuesta
 
 
 def pregunta_05():
+
+    letras = set(row[0] for row in datos)
+    respuesta=[]
+
+    for i in letras:
+        minimo=10000
+        maximo=0
+        for row in datos:
+            if row[0]==i:
+                if int(row[1])>maximo:
+                    maximo=int(row[1])
+                if int(row[1])<minimo:
+                    minimo=int(row[1])
+        respuesta.append((i,maximo,minimo))
+
     """
     Retorne una lista de tuplas con el valor maximo y minimo de la columna 2 por cada
     letra de la columa 1.
@@ -100,10 +140,25 @@ def pregunta_05():
     ]
 
     """
-    return
+    return sorted(respuesta, key=lambda x:x[0])
 
 
 def pregunta_06():
+
+    info = [elemento.split(":") for row in datos for elemento in row[4].split(",")]
+    unicos = {i[0] for i in info}
+    respuesta = []
+    for i in unicos:
+            minimo=10000
+            maximo=0
+            for par in info:
+                if par[0] == i:
+                    if int(par[1]) > maximo:
+                        maximo = int(par[1])
+                    if int(par[1]) < minimo:
+                        minimo = int(par[1])
+            respuesta.append((i,minimo,maximo))
+
     """
     La columna 5 codifica un diccionario donde cada cadena de tres letras corresponde a
     una clave y el valor despues del caracter `:` corresponde al valor asociado a la
@@ -125,10 +180,19 @@ def pregunta_06():
     ]
 
     """
-    return
+    return sorted(respuesta, key=lambda x:x[0])
 
 
 def pregunta_07():
+
+    dicc={}
+    for row in datos:
+        if int(row[1]) not in dicc.keys():
+            dicc[int(row[1])] = [row[0]]
+        else:
+            dicc[int(row[1])].append(row[0])
+    respuesta = sorted([(key,value) for key,value in dicc.items()], key = lambda x:x[0])
+
     """
     Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla contiene un
     valor posible de la columna 2 y una lista con todas las letras asociadas (columna 1)
@@ -149,10 +213,29 @@ def pregunta_07():
     ]
 
     """
-    return
+    return respuesta
 
 
 def pregunta_08():
+
+    dicc={}
+    for row in datos:
+        if int(row[1]) not in dicc.keys():
+            dicc[int(row[1])] = [row[0]]
+        else:
+            dicc[int(row[1])].append(row[0])
+
+    respuesta = sorted([(key,sorted(list(set(value)))) for key,value in dicc.items()], key = lambda x:x[0])
+
+    """ OTRA FORMA DE HACERLO
+    for row in datos:
+        if int(row[1]) not in dicc.keys():
+            dicc[int(row[1])] = [row[0]]
+        elif row[0] not in dicc[int(row[1])]:
+            dicc[int(row[1])].append(row[0])
+
+    respuesta = sorted([(key,sorted(value)) for key,value in dicc.items()], key = lambda x:x[0]) """
+
     """
     Genere una lista de tuplas, donde el primer elemento de cada tupla contiene  el valor
     de la segunda columna; la segunda parte de la tupla es una lista con las letras
@@ -174,10 +257,14 @@ def pregunta_08():
     ]
 
     """
-    return
+    return respuesta
 
 
 def pregunta_09():
+
+    info = [elemento.split(":")[0] for row in datos for elemento in row[4].split(",")]
+    repeticiones = {i:info.count(i) for i in sorted(set(info))}
+
     """
     Retorne un diccionario que contenga la cantidad de registros en que aparece cada
     clave de la columna 5.
@@ -197,10 +284,13 @@ def pregunta_09():
     }
 
     """
-    return
+    return repeticiones
 
 
 def pregunta_10():
+
+    respuesta = [(row[0],len(row[3].split(",")),len(row[4].split(","))) for row in datos]
+
     """
     Retorne una lista de tuplas contengan por cada tupla, la letra de la columna 1 y la
     cantidad de elementos de las columnas 4 y 5.
@@ -218,10 +308,19 @@ def pregunta_10():
 
 
     """
-    return
+    return respuesta
 
 
 def pregunta_11():
+
+    dicc={}
+    for row in datos:
+        for letra in row[3].split(","):
+            if letra not in dicc.keys():
+                dicc[letra] = int(row[1])
+            else:
+                dicc[letra] += int(row[1])
+
     """
     Retorne un diccionario que contengan la suma de la columna 2 para cada letra de la
     columna 4, ordenadas alfabeticamente.
@@ -239,10 +338,24 @@ def pregunta_11():
 
 
     """
-    return
+    return  dict(sorted(dicc.items(), key=lambda x:x[0]))
 
 
 def pregunta_12():
+
+    info = []
+    for row in datos:
+        numeros=[]
+        for elm in row[4].split(","):
+            numeros.append(int(elm.split(":")[1]))
+        info.append((row[0],numeros))
+
+    dicc={}
+    for row in info:
+        if row[0] not in dicc.keys():
+            dicc[row[0]] = sum(row[1])
+        else:
+            dicc[row[0]] += sum(row[1])
     """
     Genere un diccionario que contengan como clave la columna 1 y como valor la suma de
     los valores de la columna 5 sobre todo el archivo.
@@ -257,4 +370,4 @@ def pregunta_12():
     }
 
     """
-    return
+    return dict(sorted(dicc.items(), key=lambda x:x[0]))
